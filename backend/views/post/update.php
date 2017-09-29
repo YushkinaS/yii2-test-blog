@@ -17,5 +17,12 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
+ 
+<h1>Comments</h1> 
+ <?
+    $comments = $model->getComments();
+    echo $this->render('_commentsGridView', [
+        'comments' => $comments,
+    ]);
+?>
 </div>
