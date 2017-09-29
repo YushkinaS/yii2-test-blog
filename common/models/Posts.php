@@ -73,6 +73,13 @@ class Posts extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) 
         {
+            $slug = $this->slug;
+            $counter = 1;
+            while (Posts::findOne(['slug' =>$this->slug])) {
+                $this->slug = $slug.'-'.$counter;
+                $counter += 1;
+            }
+            
      
             if ($this->isNewRecord) 
             {
