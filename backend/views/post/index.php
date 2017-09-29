@@ -6,6 +6,8 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
+$this->title = 'Posts';
+$this->params['breadcrumbs'][] = $this->title;
 
 echo Html::a('Create Posts', ['create'], ['class' => 'btn btn-success']);
 
