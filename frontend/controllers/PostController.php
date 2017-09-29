@@ -15,7 +15,27 @@ use common\models\Comments;
 class PostController extends Controller
 {
     
+    public function actionIndex()
+    {
+        $posts = Posts::find();
 
+        $pagination = new Pagination([
+            'defaultPageSize' => 1,
+            'totalCount' => $posts->count(),
+        ]);
+
+        $posts = $posts->orderBy('id')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index', [
+                'posts' => $posts,
+                'pagination' => $pagination,
+        ]);			
+
+    }
+    
     /**
      * Displays homepage.
      *

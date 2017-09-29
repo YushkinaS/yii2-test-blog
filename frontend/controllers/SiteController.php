@@ -7,8 +7,6 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\data\Pagination;
-use common\models\Posts;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -213,24 +211,5 @@ class SiteController extends Controller
         ]);
     }
     
-    public function actionBlog()
-    {
-        $posts = Posts::find();
 
-        $pagination = new Pagination([
-            'defaultPageSize' => 1,
-            'totalCount' => $posts->count(),
-        ]);
-
-        $posts = $posts->orderBy('id')
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
-
-        return $this->render('blog', [
-                'posts' => $posts,
-                'pagination' => $pagination,
-        ]);			
-
-    }
 }
