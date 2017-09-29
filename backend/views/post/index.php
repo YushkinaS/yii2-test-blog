@@ -7,6 +7,9 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
 
+echo Html::a('Create Posts', ['create'], ['class' => 'btn btn-success']);
+
+    
 echo $this->render('_postsGridView', [
     'posts' => $posts,
     'pagination' => $pagination,

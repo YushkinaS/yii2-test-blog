@@ -40,11 +40,13 @@ class PostController extends Controller
      *
      * @return mixed
      */
-	public function actionView( $post_slug = '')
+	public function actionView($id)
     {
-        $post = Posts::find()    
-            ->where(['slug' => $post_slug])
-            ->one();
+        $post = Posts::findOne($id);
+        
+        /*$post = Posts::find()    
+            ->where(['id' => $id])
+            ->one();*/
             
         $comments = Comments::find()    
             ->where(['comment_post_id' => $post->id]);
@@ -66,6 +68,32 @@ class PostController extends Controller
                 'pagination' => $pagination,
         ]);			
 		
+    }
+ 
+    public function actionUpdate($id)
+    {
+        $model = Posts::findOne($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+    
+    public function actionCreate()
+    {
+        $model = new Posts();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
     
     public function actionDelete($id)

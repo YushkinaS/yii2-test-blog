@@ -26,13 +26,13 @@ echo GridView::widget([
         [
             'format' => 'html',
             'value' => function ($data) {
-                return '<a href="' . Url::to(['post/view', 'post_slug' => $data->slug]) . '">' . $data->title . '</a>';
+                return '<a href="' . Url::to(['post/view', 'id' => $data->id]) . '">' . $data->title . '</a>';
             },
         ],
      //   'author',
         [
             'class' => 'yii\grid\ActionColumn',
-
+            //'visibleButtons' => ['delete' => true, 'view' => false, 'update' => false]
         ],
         
     ]
