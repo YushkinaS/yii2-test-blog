@@ -70,12 +70,15 @@ class PostController extends Controller
 		
     }
  
-    public function actionUpdate($id)
+    public function actionUpdate($id,$status='')
     {
         $model = Posts::findOne($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->setStatus($status) && $model->save()) {
+           // return $this->redirect(['view', 'id' => $model->id]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -88,7 +91,7 @@ class PostController extends Controller
         $model = new Posts();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -123,7 +126,7 @@ class PostController extends Controller
                 'comments' => $comments,
             ]);
         else
-            return $this->redirect(['post/view', 'id' => $id] );
+            return $this->redirect(['post/update', 'id' => $id] );
         
     }
 

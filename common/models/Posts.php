@@ -69,6 +69,12 @@ class Posts extends \yii\db\ActiveRecord
         return $this->hasMany(Comments::className(), ['comment_post_id' => 'id']);
     }
     
+    public function setStatus($status)
+    {
+        if (!empty($status)) $this->status = $status;
+        return true;
+    }
+    
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) 
@@ -84,6 +90,7 @@ class Posts extends \yii\db\ActiveRecord
             if ($this->isNewRecord) 
             {
                 $this->author = Yii::$app->user->identity->id;
+                $this->status = 'draft';
                 $this->date_created = date("Y-m-d H:i:s");     
             }
             else 

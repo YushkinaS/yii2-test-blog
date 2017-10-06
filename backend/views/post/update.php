@@ -13,7 +13,8 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="posts-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    Status: <?=$model->status ?> Publish / To drafts
+    
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
