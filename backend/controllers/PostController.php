@@ -110,5 +110,21 @@ class PostController extends Controller
         else
             return $this->redirect(['post/index']);
     }
+    
+    public function actionDeletecomment($id, $comment_id)
+    {       
+        if ( $comment = Comments::findOne($comment_id) ) $comment->delete();
+
+        $post = Posts::findOne($id);
+        $comments = $post->getComments();
+
+        if (Yii::$app->request->isAjax)
+            return $this->render('_commentsGridView', [
+                'comments' => $comments,
+            ]);
+        else
+            return $this->redirect(['post/view', 'id' => $id] );
+        
+    }
 
 }
