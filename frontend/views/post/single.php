@@ -24,15 +24,14 @@ echo GridView::widget([
 <div><?= Html::encode("{$post->content}") ?></div>
 
 <?php $new_comment = $post->newComment(); ?>
-<div class="comments-form">
-    <?php $form = ActiveForm::begin(['action' => ['addcomment', 'id' => $post->id],'id' => 'comment-form']); ?>
-        <?= $form->field($new_comment, 'comment_content')->textInput() ?>
-        <?= $form->field($new_comment, 'post_id')->hiddenInput(['value'=>$post->id])->label(false); ?>
-        <div class="form-group">
-            <?= Html::submitButton('Add Comment', ['class' => 'btn btn-primary', 'name' => 'comment-button']) ?>
-        </div>
-    <?php ActiveForm::end(); ?>
-</div>
+<?php $form = ActiveForm::begin(['action' => ['addcomment', 'id' => $post->id]]); ?>
+    <?= $form->field($new_comment, 'comment_content')->textInput() ?>
+    <?= $form->field($new_comment, 'post_id')->hiddenInput(['value'=>$post->id])->label(false); ?>
+    <div class="form-group">
+        <?= Html::submitButton('Add Comment', ['class' => 'btn btn-primary', 'name' => 'comment-button']) ?>
+    </div>
+<?php ActiveForm::end(); ?>
+
             
 <?php foreach ($comments as $row): ?>
 <?//= Html::encode("{$row->slug} ") ?>

@@ -9,8 +9,8 @@ class Comments extends ActiveRecord
 {
     public function beforeSave($insert)
     {
-       // if (parent::beforeSave($insert)) 
-       // {
+        if (parent::beforeSave($insert)) 
+        {
             $this->comment_content = $_POST['Comments']['comment_content'];
             if ($this->isNewRecord) 
             {
@@ -25,8 +25,8 @@ class Comments extends ActiveRecord
             }
      
             return true;
-        //}
-        //return false;
+        }
+        return false;
     }
     
 }
