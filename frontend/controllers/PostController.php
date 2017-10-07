@@ -43,26 +43,7 @@ class PostController extends Controller
      */
 	public function actionView( $id/*$post_slug = ''*/)
     {
-        $post = Posts::findOne($id);
-        $comments = Comments::find()    
-            ->where(['comment_post_id' => $post->id]);
-            
-        $pagination = new Pagination([
-            'defaultPageSize' => 5,
-            'totalCount' => $comments->count(),
-        ]);
-        
-        $comments = $comments->orderBy('comment_id')
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
-
-
-        return $this->render('single', [
-                'post' => $post,
-                'comments' => $comments,
-                'pagination' => $pagination,
-        ]);	
+        return $this->renderSingle($id);
   /*      $post = Posts::find()    
             ->where(['slug' => $post_slug])
             ->one();
@@ -92,8 +73,35 @@ class PostController extends Controller
     public function actionAddcomment($id)
     {
         $comment = new Comments(); 
-        if ($comment->save()) return $this->redirect(['view', 'id' => $id]);
-        else return $this->redirect(['index']);
+        $comment->save();
+        return $this->renderSingle($id);
+
+
+    }
+
+    public function renderSingle($id)
+    {
+        $post = Posts::findOne($id);
+        $comments = Comments::find()    
+            ->where(['comment_post_id' => $post->id]);
+            
+        $pagination = new Pagination([
+            'defaultPageSize' => 5,
+            'totalCount' => $comments->count(),
+        ]);
+        
+        $comments = $comments->orderBy('comment_id')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+
+        return $this->render('single', [
+                'post' => $post,
+                'comments' => $comments,
+                'pagination' => $pagination,
+        ]);	
+
 
     }
 

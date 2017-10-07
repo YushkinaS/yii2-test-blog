@@ -12,6 +12,8 @@ class Comments extends ActiveRecord
         if (parent::beforeSave($insert)) 
         {
             $this->comment_content = $_POST['Comments']['comment_content'];
+            if (empty($this->comment_content)) return false;
+            
             if ($this->isNewRecord) 
             {
                 $this->comment_post_id = $_POST['Comments']['post_id'];

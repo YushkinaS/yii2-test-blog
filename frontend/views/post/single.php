@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\widgets\ActiveForm;
-
+use yii\widgets\Pjax;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
@@ -19,20 +19,32 @@ echo GridView::widget([
 */
 
 ?>
+<?php
+    $this->registerJs(
+        '$("document").ready(function(){
+            $("#new_note").on("pjax:end", function() {
+            $.pjax.reload({container:"#notes"});  //Reload GridView
+        });
+    });'
+    );
+?>
+
 <div><?= $post->author ?></div>
 <h1><?= Html::encode("{$post->title}") ?></h1>
 <div><?= Html::encode("{$post->content}") ?></div>
 
+<?php Pjax::begin(['id' => 'new_note']) ?>
 <?php $new_comment = $post->newComment(); ?>
-<?php $form = ActiveForm::begin(['action' => ['addcomment', 'id' => $post->id]]); ?>
+<?php $form = ActiveForm::begin(['action' => ['addcomment', 'id' => $post->id], 'options' => ['data-pjax' => true]]); ?>
     <?= $form->field($new_comment, 'comment_content')->textInput() ?>
     <?= $form->field($new_comment, 'post_id')->hiddenInput(['value'=>$post->id])->label(false); ?>
     <div class="form-group">
         <?= Html::submitButton('Add Comment', ['class' => 'btn btn-primary', 'name' => 'comment-button']) ?>
     </div>
 <?php ActiveForm::end(); ?>
+<?php Pjax::end(); ?>
 
-            
+<?php Pjax::begin(['id' => 'notes']) ?>            
 <?php foreach ($comments as $row): ?>
 <?//= Html::encode("{$row->slug} ") ?>
 
@@ -43,3 +55,4 @@ echo GridView::widget([
     </li>
 <?php endforeach; ?>
 <?= LinkPager::widget(['pagination' => $pagination]) ?>
+<?php Pjax::end() ?>
