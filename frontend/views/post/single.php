@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
-
+use yii\widgets\ActiveForm;
 
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -19,16 +19,26 @@ echo GridView::widget([
 */
 
 ?>
-<h1>Заголовок</h1>
+<div><?= $post->author ?></div>
+<h1><?= Html::encode("{$post->title}") ?></h1>
+<div><?= Html::encode("{$post->content}") ?></div>
 
-        <?= Html::encode("{$post->title} ({$post->content})") ?>:
-        <?= $post->author ?>
-
+<?php $new_comment = $post->newComment(); ?>
+<div class="comments-form">
+    <?php $form = ActiveForm::begin(['action' => ['addcomment', 'id' => $post->id],'id' => 'comment-form']); ?>
+        <?= $form->field($new_comment, 'comment_content')->textInput() ?>
+        <?= $form->field($new_comment, 'post_id')->hiddenInput(['value'=>$post->id])->label(false); ?>
+        <div class="form-group">
+            <?= Html::submitButton('Add Comment', ['class' => 'btn btn-primary', 'name' => 'comment-button']) ?>
+        </div>
+    <?php ActiveForm::end(); ?>
+</div>
+            
 <?php foreach ($comments as $row): ?>
 <?//= Html::encode("{$row->slug} ") ?>
 
     <li>
-        <?= $row->comment_author ?>
+        <?= $row->comment_author ?>:
         <?= Html::encode("{$row->comment_content}") ?>
        
     </li>

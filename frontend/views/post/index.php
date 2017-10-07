@@ -21,15 +21,15 @@ echo GridView::widget([
 
 ?>
 <h1>Архив</h1>
-<ul>
+
 <?php foreach ($posts as $row): ?>
 <?//= Html::encode("{$row->slug} ") ?>
 
-    <li><a href="<?= Url::to(['post/view', 'post_slug' => $row->slug]); ?>"><?= Html::encode("{$row->title} ") ?></a>
-        <?//= Html::encode("{$row->title} ({$row->content})") ?>:
-        <?= $row->author ?>
-    </li>
+    <div style="margin-bottom:20px;"><a href="<?= Url::to(['post/view', 'id' => $row->id]); ?>"><?= Html::encode("{$row->title} ") ?></a>
+        <?//= Html::encode("{$row->title} ({$row->content})") ?>
+        <div><?= $row->author ?></div>
+    </div>
 <?php endforeach; ?>
-</ul>
+
 
 <?= LinkPager::widget(['pagination' => $pagination]) ?>

@@ -20,7 +20,7 @@ class PostController extends Controller
         $posts = Posts::find();
 
         $pagination = new Pagination([
-            'defaultPageSize' => 1,
+            'defaultPageSize' => 5,
             'totalCount' => $posts->count(),
         ]);
 
@@ -41,17 +41,14 @@ class PostController extends Controller
      *
      * @return mixed
      */
-	public function actionView( $post_slug = '')
+	public function actionView( $id/*$post_slug = ''*/)
     {
-        $post = Posts::find()    
-            ->where(['slug' => $post_slug])
-            ->one();
-            
+        $post = Posts::findOne($id);
         $comments = Comments::find()    
             ->where(['comment_post_id' => $post->id]);
             
         $pagination = new Pagination([
-            'defaultPageSize' => 1,
+            'defaultPageSize' => 5,
             'totalCount' => $comments->count(),
         ]);
         
@@ -65,8 +62,39 @@ class PostController extends Controller
                 'post' => $post,
                 'comments' => $comments,
                 'pagination' => $pagination,
-        ]);			
+        ]);	
+  /*      $post = Posts::find()    
+            ->where(['slug' => $post_slug])
+            ->one();
+            
+        $comments = Comments::find()    
+            ->where(['comment_post_id' => $post->id]);
+            
+        $pagination = new Pagination([
+            'defaultPageSize' => 5,
+            'totalCount' => $comments->count(),
+        ]);
+        
+        $comments = $comments->orderBy('comment_id')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+
+        return $this->render('single', [
+                'post' => $post,
+                'comments' => $comments,
+                'pagination' => $pagination,
+        ]);		*/	
 		
+    }
+    
+    public function actionAddcomment($id)
+    {
+        $comment = new Comments(); 
+        if ($comment->save()) return $this->redirect(['view', 'id' => $id]);
+        else return $this->redirect(['index']);
+
     }
 
 }

@@ -69,6 +69,11 @@ class Posts extends \yii\db\ActiveRecord
         return $this->hasMany(Comments::className(), ['comment_post_id' => 'id']);
     }
     
+    public function newComment()
+    {
+        return new Comments();
+    }
+    
     public function setStatus($status)
     {
         if (!empty($status)) $this->status = $status;
