@@ -39,7 +39,7 @@ echo GridView::widget([
      //   'author',
         [
             'class' => 'yii\grid\ActionColumn',
-            //'visibleButtons' => ['delete' => true, 'view' => false, 'update' => false]
+            'visibleButtons' => ['delete' => true, 'view' => false, 'update' => false]
         ],
         
     ]

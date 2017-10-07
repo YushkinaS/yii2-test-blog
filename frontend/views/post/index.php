@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
-
+use yii\widgets\Pjax;
 
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -20,6 +20,7 @@ echo GridView::widget([
 */
 
 ?>
+<?php Pjax::begin(); ?>    
 <h1>Архив</h1>
 
 <?php foreach ($posts as $row): ?>
@@ -33,3 +34,4 @@ echo GridView::widget([
 
 
 <?= LinkPager::widget(['pagination' => $pagination]) ?>
+<?php Pjax::end(); ?>
