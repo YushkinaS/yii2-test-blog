@@ -89,7 +89,7 @@ class PostController extends Controller
     public function actionCreate()
     {
         $model = new Posts();
-
+        Yii::warning('**********************', var_export($model,true));
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
         } else {
@@ -128,6 +128,23 @@ class PostController extends Controller
         else
             return $this->redirect(['post/update', 'id' => $id] );
         
+    }
+    
+    public function actionEditcomment($id, $comment_id)
+    {
+        if ($comment = Comments::findOne($comment_id) ) $comment->save();
+        
+        $post = Posts::findOne($id);
+        $comments = $post->getComments();
+
+        if (Yii::$app->request->isAjax)
+            return $this->render('_commentsGridView', [
+                'comments' => $comments,
+            ]);
+        else
+            return $this->redirect(['post/update', 'id' => $id] );
+
+
     }
 
 }

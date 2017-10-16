@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-
+use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
@@ -15,6 +15,20 @@ echo GridView::widget([
     'columns' => [
         'comment_author',
         'comment_content',
+        [
+            'format' => 'raw',
+            'value' => function ($data) {
+                ob_start();
+                $form = ActiveForm::begin(['action' => ['editcomment', 'id' => $data->comment_post_id, 'comment_id' => $data->comment_id], 'options' => ['data-pjax' => true]]); 
+                echo $form->field($data, 'comment_content')->textInput()->label(false);
+
+                echo Html::submitButton('Edit', ['class' => 'btn btn-primary', 'name' => 'comment-button']);
+  
+                ActiveForm::end();
+
+                return ob_get_clean();
+            }
+        ],
         [
             'format' => 'raw',
             'value' => function ($data) {
