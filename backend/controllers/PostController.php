@@ -10,7 +10,7 @@ use common\models\Posts;
 use common\models\Comments;
 
 /**
- * Site controller
+ * Post controller
  */
 class PostController extends Controller
 {
@@ -27,7 +27,6 @@ class PostController extends Controller
         $posts = $posts->orderBy('id')
             ->offset($pagination->offset)
             ->limit($pagination->limit);
-           // ->all();
 
         return $this->render('index', [
                 'posts' => $posts,
@@ -35,41 +34,6 @@ class PostController extends Controller
         ]);	
     }
     
-    /**
-     * Displays homepage.
-     *
-     * @return mixed
-     */
-	public function actionView($id)
-    {
-        $post = Posts::findOne($id);
-        
-        /*$post = Posts::find()    
-            ->where(['id' => $id])
-            ->one();*/
-            
-        $comments = Comments::find()    
-            ->where(['comment_post_id' => $post->id]);
-            
-        $pagination = new Pagination([
-            'defaultPageSize' => 1,
-            'totalCount' => $comments->count(),
-        ]);
-        
-        $comments = $comments->orderBy('comment_id')
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
-
-
-        return $this->render('single', [
-                'post' => $post,
-                'comments' => $comments,
-                'pagination' => $pagination,
-        ]);			
-		
-    }
- 
     public function actionUpdate($id,$status='')
     {
         $model = Posts::findOne($id);

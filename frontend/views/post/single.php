@@ -1,22 +1,14 @@
 <?php
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
-use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
 
-/*
-$dataProvider = new ActiveDataProvider([
-    'query' => $query,
-    'pagination' => [
-        'pageSize' => 4,
-    ],
-]);
-echo GridView::widget([
-    'dataProvider' => $dataProvider,
-]);
-*/
+/* @var $this yii\web\View */
+/* @var $posts common\models\Posts */
+/* @var $comments common\models\Comments */
 
 ?>
 <?php

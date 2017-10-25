@@ -1,10 +1,12 @@
 <?php
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
-use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
+/* @var $this yii\web\View */
+/* @var $comments yii\db\ActiveQuery */
 
 Pjax::begin(['id' => 'pjax-container']);
 $dataProvider = new ActiveDataProvider([
@@ -26,18 +28,7 @@ echo GridView::widget([
                         'title' => 'Delete',
                         'aria-label' => 'Delete',
                         'data-method' => 'post',
-                        'data-pjax' => 'pjax-container',
-                      /*  'onclick' => "
-                                if (confirm('ok?')) {
-                                    $.ajax($(this).href(), {
-                                        type: 'POST'
-                                    }).done(function(data) {
-                                        $.pjax.reload({container: '#pjax-container'});
-                                    });
-                                }
-                                return false;
-                            ",*/
-                        
+                        'data-pjax' => 'pjax-container',                        
                     ]);
 
 

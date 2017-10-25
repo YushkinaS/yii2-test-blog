@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Posts */
+/* @var $model common\models\Posts */
 
 $this->title = 'Update Posts: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = 'Update';
  
 <h1>Comments</h1> 
  <?
-    $comments = $model->getComments();
+    $comments = $model->getComments();  var_dump($comments);
     echo $this->render('_commentsGridView', [
         'comments' => $comments,
     ]);
