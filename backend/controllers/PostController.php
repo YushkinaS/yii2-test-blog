@@ -38,16 +38,22 @@ class PostController extends Controller
     {
         $model = Posts::findOne($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->setStatus($status) && $model->save()) {
-           // return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->setStatus($status) && $model->save())
+            return $this->renderUpdate($model);
+        else 
+            return $this->renderUpdate($model);
+    }
+    
+    public function renderUpdate($model)
+    {
+        if (Yii::$app->request->isAjax)
+            return $this->render('_form', [
+                'model' => $model,
+            ]);
+        else 
             return $this->render('update', [
                 'model' => $model,
             ]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
     }
     
     public function actionCreate()

@@ -8,11 +8,12 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $model common\models\Posts */
 /* @var $form yii\widgets\ActiveForm */
-?>
 
+Pjax::begin(['id' => 'pjax-container1']);
+?>
 <div class="posts-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
 
     Status: <?=$model->status ?> 
    <?= Html::a($model->status == 'publish' ? 'To drafts' : 'Publish', 
@@ -20,9 +21,9 @@ use yii\widgets\Pjax;
                     [
                         'class' => 'btn btn-success',
                         'title' => $model->status == 'publish' ? 'draft' : 'publish',
-                        'aria-label' => $model->status == 'publish' ? 'draft' : 'publish',
+                        //'aria-label' => $model->status == 'publish' ? 'draft' : 'publish',
                         'data-method' => 'post',
-                       // 'data-pjax' => 'pjax-container',                        
+                        'data-pjax' => 'pjax-container1',                        
                     ]);
     ?>
         
@@ -51,3 +52,4 @@ use yii\widgets\Pjax;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php Pjax::end(); ?>
