@@ -1,8 +1,6 @@
 <?php
 namespace backend\controllers;
 
-//убрать лишние юзы
-
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -14,7 +12,10 @@ use common\models\Comments;
  */
 class PostController extends Controller
 {
-    
+    /**
+     * Lists all Posts models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $posts = Posts::find();
@@ -34,6 +35,12 @@ class PostController extends Controller
         ]);	
     }
     
+    /**
+     * Updates an existing Posts model.
+     * @param integer $id
+     * @param string $status
+     * @return mixed
+     */
     public function actionUpdate($id,$status='')
     {
         $model = Posts::findOne($id);
@@ -44,6 +51,11 @@ class PostController extends Controller
             return $this->renderUpdate($model);
     }
     
+    /**
+     * Render form for editing the Posts model 
+     * @param common\models\Posts $model
+     * @return mixed
+     */
     public function renderUpdate($model)
     {
         if (Yii::$app->request->isAjax)
@@ -56,6 +68,10 @@ class PostController extends Controller
             ]);
     }
     
+    /**
+     * Creates a new Posts model.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Posts();
@@ -68,10 +84,15 @@ class PostController extends Controller
             ]);
         }
     }
-    
+  
+    /**
+     * Deletes an existing Posts model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */  
     public function actionDelete($id)
-    {
-        
+    {        
         if ( $post = Posts::findOne($id) ) $post->delete();
         
         $posts = Posts::find();
@@ -84,6 +105,12 @@ class PostController extends Controller
             return $this->redirect(['post/index']);
     }
     
+    /**
+     * Deletes a post comment
+     * @param integer $id
+     * @param integer $comment_id
+     * @return mixed
+     */     
     public function actionDeletecomment($id, $comment_id)
     {       
         if ( $comment = Comments::findOne($comment_id) ) $comment->delete();

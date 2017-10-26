@@ -69,17 +69,27 @@ class Posts extends \yii\db\ActiveRecord
         return $this->hasMany(Comments::className(), ['comment_post_id' => 'id']);
     }
     
+    /**
+     * @return \common\models\Comments
+     */
     public function newComment()
     {
         return new Comments();
     }
-    
+ 
+    /**
+     * @param string $status
+     * @return boolean
+     */ 
     public function setStatus($status)
     {
         if (!empty($status)) $this->status = $status;
         return true;
     }
     
+    /**
+     * @inheritdoc
+     */
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) 

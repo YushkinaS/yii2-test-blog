@@ -1,8 +1,6 @@
 <?php
 namespace frontend\controllers;
 
-//убрать лишние юзы
-
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -14,7 +12,10 @@ use common\models\Comments;
  */
 class PostController extends Controller
 {
-    
+    /**
+     * Lists all Posts models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $posts = Posts::find()->where(['status' => 'publish']);
@@ -37,8 +38,8 @@ class PostController extends Controller
     }
     
     /**
-     * Displays homepage.
-     *
+     * Displays a single Posts model.
+     * @param integer $id
      * @return mixed
      */
 	public function actionView($id)
@@ -46,6 +47,11 @@ class PostController extends Controller
         return $this->renderSingle($id);
     }
     
+    /**
+     * Creates a new Comment model.
+     * @param integer $id
+     * @return mixed
+     */
     public function actionAddcomment($id)
     {
         $comment = new Comments(); 
@@ -53,6 +59,11 @@ class PostController extends Controller
         return $this->renderSingle($id);
     }
 
+    /**
+     * Displays a single Posts model.
+     * @param integer $id
+     * @return mixed
+     */
     public function renderSingle($id)
     {
         $post = Posts::findOne($id);
@@ -74,8 +85,6 @@ class PostController extends Controller
                 'comments' => $comments,
                 'pagination' => $pagination,
         ]);	
-
-
     }
 
 }
