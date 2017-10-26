@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="posts-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    Status: <?=$model->status ?> Publish / To drafts
     
     <?= $this->render('_form', [
         'model' => $model,
@@ -21,7 +20,7 @@ $this->params['breadcrumbs'][] = 'Update';
  
 <h1>Comments</h1> 
  <?
-    $comments = $model->getComments();  var_dump($comments);
+    $comments = $model->getComments();
     echo $this->render('_commentsGridView', [
         'comments' => $comments,
     ]);

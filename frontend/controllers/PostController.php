@@ -17,7 +17,7 @@ class PostController extends Controller
     
     public function actionIndex()
     {
-        $posts = Posts::find();
+        $posts = Posts::find()->where(['status' => 'publish']);
 
         $pagination = new Pagination([
             'defaultPageSize' => 5,
