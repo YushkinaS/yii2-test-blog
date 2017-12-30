@@ -58,14 +58,16 @@ class PostController extends Controller
      */
     public function renderUpdate($model)
     {
-        if (Yii::$app->request->isAjax)
-            return $this->render('_form', [
-                'model' => $model,
-            ]);
-        else 
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if (Yii::$app->user->can('updatePost')) { 
+            if (Yii::$app->request->isAjax)
+                return $this->render('_form', [
+                    'model' => $model,
+                ]);
+            else 
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+        }
     }
     
     /**
@@ -74,14 +76,16 @@ class PostController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Posts();
+        if (Yii::$app->user->can('createPost')) { 
+            $model = new Posts();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['update', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
     }
   
