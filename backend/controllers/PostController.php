@@ -52,6 +52,9 @@ class PostController extends Controller
             else 
                 return $this->renderUpdate($model);
         }
+        else {
+            return $this->render('forbidden');
+        }
     }
     
     /**
@@ -87,6 +90,9 @@ class PostController extends Controller
                     'model' => $model,
                 ]);
             }
+        }
+        else {
+            return $this->render('forbidden');
         }
     }
   
