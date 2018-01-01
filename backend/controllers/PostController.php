@@ -106,7 +106,7 @@ class PostController extends Controller
     {        
         if ( $post = Posts::findOne($id) ) $post->delete();
         
-        $posts = Posts::find();
+        $posts = Posts::find()->orderBy('id DESC');
         
         if (Yii::$app->request->isAjax)
             return $this->render('_postsGridView', [

@@ -40,9 +40,12 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-      /*      'rules' => [
-			  'blog/<post_slug:[^/]+>' => 'post/view',
-            ],*/
+            'rules' => [
+                    'blog' => 'post/index', //более узкое правило должно быть выше, чем более общее!
+                    '<action:[^/]+>' => 'site/<action>',
+                    
+
+            ],
         ],
        
     ],
