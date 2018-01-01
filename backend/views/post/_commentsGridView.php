@@ -1,10 +1,15 @@
 <?php
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
+
+/* @var $this yii\web\View */
+/* @var $comments yii\db\ActiveQuery */
 
 Pjax::begin(['id' => 'pjax-container']);
 $dataProvider = new ActiveDataProvider([
@@ -18,20 +23,6 @@ echo GridView::widget([
         [
             'format' => 'raw',
             'value' => function ($data) {
-                ob_start();
-                $form = ActiveForm::begin(['action' => ['editcomment', 'id' => $data->comment_post_id, 'comment_id' => $data->comment_id], 'options' => ['data-pjax' => true]]); 
-                echo $form->field($data, 'comment_content')->textInput()->label(false);
-
-                echo Html::submitButton('Edit', ['class' => 'btn btn-primary', 'name' => 'comment-button']);
-  
-                ActiveForm::end();
-
-                return ob_get_clean();
-            }
-        ],
-        [
-            'format' => 'raw',
-            'value' => function ($data) {
                 return Html::a('', 
                     Url::to(['post/deletecomment', 'id' => $data->comment_post_id, 'comment_id' => $data->comment_id]), 
                     [
@@ -40,18 +31,7 @@ echo GridView::widget([
                         'title' => 'Delete',
                         'aria-label' => 'Delete',
                         'data-method' => 'post',
-                        'data-pjax' => 'pjax-container',
-                      /*  'onclick' => "
-                                if (confirm('ok?')) {
-                                    $.ajax($(this).href(), {
-                                        type: 'POST'
-                                    }).done(function(data) {
-                                        $.pjax.reload({container: '#pjax-container'});
-                                    });
-                                }
-                                return false;
-                            ",*/
-                        
+                        'data-pjax' => 'pjax-container',                        
                     ]);
 
 

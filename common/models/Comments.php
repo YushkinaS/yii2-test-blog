@@ -5,8 +5,21 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 
+/**
+ * This is the model class for table "Comments".
+ *
+ * @property integer $comment_id
+ * @property integer $comment_post_id
+ * @property string $comment_author
+ * @property string $comment_content
+ */
+ 
 class Comments extends ActiveRecord
 {
+    
+    /**
+     * @inheritdoc
+     */
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) 

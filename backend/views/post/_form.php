@@ -1,17 +1,32 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Posts */
+/* @var $model common\models\Posts */
 /* @var $form yii\widgets\ActiveForm */
-?>
 
+Pjax::begin(['id' => 'pjax-container1']);
+?>
 <div class="posts-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
 
+    Status: <?=$model->status ?> 
+   <?= Html::a($model->status == 'publish' ? 'To drafts' : 'Publish', 
+                    Url::to(['post/update', 'id' => $model->id, 'status' => $model->status == 'publish' ? 'draft' : 'publish']), 
+                    [
+                        'class' => 'btn btn-success',
+                        'title' => $model->status == 'publish' ? 'draft' : 'publish',
+                        //'aria-label' => $model->status == 'publish' ? 'draft' : 'publish',
+                        'data-method' => 'post',
+                        'data-pjax' => 'pjax-container1',                        
+                    ]);
+    ?>
+        
     <?//= $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'title')->textarea(['rows' => 6]) ?>
@@ -37,3 +52,4 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php Pjax::end(); ?>

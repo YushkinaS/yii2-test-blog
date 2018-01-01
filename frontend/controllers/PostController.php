@@ -1,8 +1,6 @@
 <?php
 namespace frontend\controllers;
 
-//убрать лишние юзы
-
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -14,10 +12,13 @@ use common\models\Comments;
  */
 class PostController extends Controller
 {
-    
+    /**
+     * Lists all Posts models.
+     * @return mixed
+     */
     public function actionIndex()
     {
-        $posts = Posts::find();
+        $posts = Posts::find()->where(['status' => 'publish']);
 
         $pagination = new Pagination([
             'defaultPageSize' => 5,
@@ -37,53 +38,36 @@ class PostController extends Controller
     }
     
     /**
-     * Displays homepage.
-     *
+     * Displays a single Posts model.
+     * @param integer $id
      * @return mixed
      */
-	public function actionView( $id/*$post_slug = ''*/)
+	public function actionView($id)
     {
         return $this->renderSingle($id);
-  /*      $post = Posts::find()    
-            ->where(['slug' => $post_slug])
-            ->one();
-            
-        $comments = Comments::find()    
-            ->where(['comment_post_id' => $post->id]);
-            
-        $pagination = new Pagination([
-            'defaultPageSize' => 5,
-            'totalCount' => $comments->count(),
-        ]);
-        
-        $comments = $comments->orderBy('comment_id')
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
-
-
-        return $this->render('single', [
-                'post' => $post,
-                'comments' => $comments,
-                'pagination' => $pagination,
-        ]);		*/	
-		
     }
     
+    /**
+     * Creates a new Comment model.
+     * @param integer $id
+     * @return mixed
+     */
     public function actionAddcomment($id)
     {
         $comment = new Comments(); 
         $comment->save();
         return $this->renderSingle($id);
-
-
     }
 
+    /**
+     * Displays a single Posts model.
+     * @param integer $id
+     * @return mixed
+     */
     public function renderSingle($id)
     {
         $post = Posts::findOne($id);
-        $comments = Comments::find()    
-            ->where(['comment_post_id' => $post->id]);
+        $comments = $post->getComments();
             
         $pagination = new Pagination([
             'defaultPageSize' => 5,
@@ -101,8 +85,6 @@ class PostController extends Controller
                 'comments' => $comments,
                 'pagination' => $pagination,
         ]);	
-
-
     }
 
 }

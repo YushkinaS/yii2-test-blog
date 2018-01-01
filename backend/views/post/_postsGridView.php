@@ -1,10 +1,12 @@
 <?php
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
-use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
+/* @var $this yii\web\View */
+/* @var $posts yii\db\ActiveQuery */
 
 Pjax::begin();
 $dataProvider = new ActiveDataProvider([

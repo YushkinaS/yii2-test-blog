@@ -69,24 +69,34 @@ class Posts extends \yii\db\ActiveRecord
         return $this->hasMany(Comments::className(), ['comment_post_id' => 'id']);
     }
     
+    /**
+     * @return \common\models\Comments
+     */
     public function newComment()
     {
         return new Comments();
     }
-    
+ 
+    /**
+     * @param string $status
+     * @return boolean
+     */ 
     public function setStatus($status)
     {
         if (!empty($status)) $this->status = $status;
         return true;
     }
     
+    /**
+     * @inheritdoc
+     */
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) 
         {
             $slug = $this->slug;
             $counter = 1;
-            while (Posts::findOne(['slug' =>$this->slug])) {
+            while (Posts::find()->where(['slug' =>$this->slug])->andWhere(['!=', 'id', $this->id])->One()) {
                 $this->slug = $slug.'-'.$counter;
                 $counter += 1;
             }
