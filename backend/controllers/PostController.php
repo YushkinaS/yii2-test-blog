@@ -25,7 +25,7 @@ class PostController extends Controller
             'totalCount' => $posts->count(),
         ]);
 
-        $posts = $posts->orderBy('id')
+        $posts = $posts->orderBy('id DESC')
             ->offset($pagination->offset)
             ->limit($pagination->limit);
 
@@ -43,12 +43,15 @@ class PostController extends Controller
      */
     public function actionUpdate($id,$status='')
     {
-        $model = Posts::findOne($id);
+        $model = Posts::findOne($id); 
+        if (Yii::$app->user->can('updatePost', ['post' => $model])) {
+            
 
-        if ($model->load(Yii::$app->request->post()) && $model->setStatus($status) && $model->save())
-            return $this->renderUpdate($model);
-        else 
-            return $this->renderUpdate($model);
+            if ($model->load(Yii::$app->request->post()) && $model->setStatus($status) && $model->save())
+                return $this->renderUpdate($model);
+            else 
+                return $this->renderUpdate($model);
+        }
     }
     
     /**
@@ -58,7 +61,6 @@ class PostController extends Controller
      */
     public function renderUpdate($model)
     {
-        if (Yii::$app->user->can('updatePost')) { 
             if (Yii::$app->request->isAjax)
                 return $this->render('_form', [
                     'model' => $model,
@@ -67,7 +69,6 @@ class PostController extends Controller
                 return $this->render('update', [
                     'model' => $model,
                 ]);
-        }
     }
     
     /**
