@@ -43,6 +43,9 @@ return [
             'rules' => [
                     'blog' => 'post/index', //более узкое правило должно быть выше, чем более общее!
                     '<action:[^/]+>' => 'site/<action>',
+                    [
+                        'class' => 'app\components\PostUrlRule', 
+                    ],
                     
 
             ],
